@@ -82,7 +82,7 @@ export default function PortfolioSection() {
           </motion.div>
         </div>
 
-        <div className="grid gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {projects.map((p, i) => {
             const Icon = p.icon;
             return (
@@ -94,100 +94,65 @@ export default function PortfolioSection() {
                 viewport={{ once: true, margin: '-50px' }}
                 variants={fadeUp}
                 whileHover={{ y: -5, transition: { duration: 0.3 } }}
-                className={`group relative rounded-2xl border border-border/50 bg-gradient-to-br ${p.gradient} backdrop-blur-sm overflow-hidden hover:border-primary/50 transition-all duration-300`}
+                className={`group relative rounded-xl border border-border/50 bg-gradient-to-br ${p.gradient} backdrop-blur-sm overflow-hidden hover:border-primary/50 transition-all duration-300`}
               >
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-foreground/0 to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 
                 {/* Content */}
-                <div className="relative p-6 sm:p-8 md:p-10">
+                <div className="relative p-4 sm:p-5">
                   
                   {/* Header with icon */}
-                  <div className="flex items-start justify-between mb-6">
+                  <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold font-['Space_Grotesk'] text-foreground mb-2 group-hover:text-primary transition-colors">
+                      <h3 className="text-base sm:text-lg font-bold font-['Space_Grotesk'] text-foreground mb-1 group-hover:text-primary transition-colors line-clamp-2">
                         {p.name}
                       </h3>
                     </div>
-                    <div className="flex-shrink-0 ml-4">
-                      <div className="p-3 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
-                        <Icon className="w-6 h-6 text-primary" />
+                    <div className="flex-shrink-0 ml-2">
+                      <div className="p-2 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <Icon className="w-4 h-4 text-primary" />
                       </div>
                     </div>
                   </div>
 
-                  {/* Three column details */}
-                  <div className="grid sm:grid-cols-3 gap-6 mb-8">
-                    {/* Problem */}
-                    <motion.div 
-                      className="space-y-2"
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="inline-flex items-center gap-2 mb-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-                        <p className="text-xs uppercase font-semibold text-muted-foreground tracking-wider">Problem</p>
-                      </div>
-                      <p className="text-sm leading-relaxed text-foreground">{p.problem}</p>
-                    </motion.div>
-
-                    {/* Solution */}
-                    <motion.div 
-                      className="space-y-2"
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="inline-flex items-center gap-2 mb-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
-                        <p className="text-xs uppercase font-semibold text-muted-foreground tracking-wider">Solution</p>
-                      </div>
-                      <p className="text-sm leading-relaxed text-foreground">{p.solution}</p>
-                    </motion.div>
-
-                    {/* Impact */}
-                    <motion.div 
-                      className="space-y-2"
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <div className="inline-flex items-center gap-2 mb-3">
-                        <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                        <p className="text-xs uppercase font-semibold text-muted-foreground tracking-wider">Impact</p>
-                      </div>
-                      <p className="text-sm leading-relaxed text-foreground font-medium">{p.impact}</p>
-                    </motion.div>
-                  </div>
+                  {/* Brief description */}
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-4 line-clamp-2">
+                    {p.solution}
+                  </p>
 
                   {/* Tech Stack */}
-                  <div className="mb-8">
-                    <div className="flex flex-wrap gap-2">
-                      {p.tech.map((t, idx) => (
+                  <div className="mb-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      {p.tech.slice(0, 4).map((t, idx) => (
                         <motion.span 
                           key={t}
                           initial={{ opacity: 0, scale: 0.8 }}
                           whileInView={{ opacity: 1, scale: 1 }}
                           transition={{ delay: 0.1 + idx * 0.05 }}
-                          className="inline-flex items-center px-3 py-1.5 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-200"
+                          className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20 group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-200"
                         >
                           {t}
                         </motion.span>
                       ))}
+                      {p.tech.length > 4 && (
+                        <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-semibold bg-primary/10 text-primary border border-primary/20">
+                          +{p.tech.length - 4}
+                        </span>
+                      )}
                     </div>
-                    {p.confidential && (
-                      <p className="mt-3 text-sm text-muted-foreground">Full technical details are withheld for security/confidentiality reasons. Contact me to request access.</p>
-                    )}
                   </div>
 
                   {/* CTA Buttons */}
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2">
                     <Button 
                       asChild 
                       size="sm" 
-                      className="rounded-lg gap-2 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 font-semibold"
+                      className="rounded-lg gap-1.5 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 font-semibold text-xs h-8"
                     >
                       <a href={p.demo} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="w-4 h-4" /> 
-                        <span>Live Demo</span>
+                        <ExternalLink className="w-3.5 h-3.5" /> 
+                        <span>Demo</span>
                       </a>
                     </Button>
                     {p.github && (
@@ -195,11 +160,11 @@ export default function PortfolioSection() {
                         asChild 
                         variant="outline" 
                         size="sm" 
-                        className="rounded-lg gap-2 hover:bg-primary/10 hover:border-primary/50"
+                        className="rounded-lg gap-1.5 hover:bg-primary/10 hover:border-primary/50 text-xs h-8"
                       >
                         <a href={p.github} target="_blank" rel="noopener noreferrer">
-                          <Github className="w-4 h-4" /> 
-                          <span>View Code</span>
+                          <Github className="w-3.5 h-3.5" /> 
+                          <span>Code</span>
                         </a>
                       </Button>
                     )}
